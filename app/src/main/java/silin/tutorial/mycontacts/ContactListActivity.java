@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class ContactListActivity extends ActionBarActivity {
     private ContactList mContacts;
 
+    private ContactAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,8 @@ public class ContactListActivity extends ActionBarActivity {
         }
 
         ListView listView = (ListView) findViewById(R.id.contact_list_view);
-        listView.setAdapter(new ContactAdapter(mContacts));
+        mAdapter = new ContactAdapter(mContacts);
+        listView.setAdapter(mAdapter);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             int previousFirstItem = 0;
 
@@ -73,6 +76,13 @@ public class ContactListActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mAdapter.notifyDataSetChanged();
     }
 
     private class ContactAdapter extends ArrayAdapter<Contact> {

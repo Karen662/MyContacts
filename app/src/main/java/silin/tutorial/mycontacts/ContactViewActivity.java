@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,10 @@ public class ContactViewActivity extends ActionBarActivity {
 
     private Contact mContact;
 
+    private TextView mContactName;
+
+    private FieldsAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +46,7 @@ public class ContactViewActivity extends ActionBarActivity {
 
         mPosition = getIntent().getIntExtra(EXTRA, 0);
         mContact = ContactList.getInstance().get(mPosition);
-        TextView textView = (TextView) findViewById(R.id.contact_view_name);
-        textView.setText(mContact.getName());
+        mContactName = (TextView) findViewById(R.id.contact_view_name);
 
         RelativeLayout headerSection = (RelativeLayout) findViewById(R.id.contact_view_header);
 
@@ -75,12 +79,27 @@ public class ContactViewActivity extends ActionBarActivity {
         });
 
         ListView listView = (ListView) findViewById(R.id.contact_view_fields);
-        listView.setAdapter(new FieldsAdapter(mContact.phoneNumbers, mContact.emails));
+        mAdapter = new FieldsAdapter(mContact.phoneNumbers, mContact.emails);
+        listView.setAdapter(mAdapter);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.freedom_tower);
         Palette palette = Palette.generate(bitmap);
 
         mColor = palette.getMutedSwatch().getRgb();
+
+        updateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateUI();
+    }
+
+    private void updateUI() {
+        mContactName.setText(mContact.getName());
+        mAdapter.notifyDataSetChanged();
     }
 
     private class FieldsAdapter extends BaseAdapter {
