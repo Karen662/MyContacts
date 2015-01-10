@@ -1,5 +1,6 @@
 package silin.tutorial.mycontacts;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,19 +25,22 @@ import java.util.ArrayList;
 
 
 public class ContactViewActivity extends ActionBarActivity {
+    private static final String TAG = "ContactViewActivity";
 
     public static final String EXTRA = "CVA_Contact";
 
     private int mColor;
+
+    private Contact mContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_view);
 
-        Contact contact = (Contact) getIntent().getSerializableExtra(EXTRA);
+        mContact = (Contact) getIntent().getSerializableExtra(EXTRA);
         TextView textView = (TextView) findViewById(R.id.contact_view_name);
-        textView.setText(contact.getName());
+        textView.setText(mContact.getName());
 
         RelativeLayout headerSection = (RelativeLayout) findViewById(R.id.contact_view_header);
 
@@ -55,14 +60,22 @@ public class ContactViewActivity extends ActionBarActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                return id == R.id.contact_view_edit;
+                if (id == R.id.contact_view_edit) {
+                    Log.d(TAG, "Are you there?");
 
+                    Intent i = new Intent(ContactViewActivity.this, ContactEditActivity.class);
+                    i.putExtra(ContactEditActivity.EXTRA, mContact);
+                    startActivity(i);
+
+                    return true;
+                }
+
+                return false;
             }
         });
-        setSupportActionBar(toolbar);
 
         ListView listView = (ListView) findViewById(R.id.contact_view_fields);
-        listView.setAdapter(new FieldsAdapter(contact.phoneNumbers, contact.emails));
+        listView.setAdapter(new FieldsAdapter(mContact.phoneNumbers, mContact.emails));
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.freedom_tower);
         Palette palette = Palette.generate(bitmap);
