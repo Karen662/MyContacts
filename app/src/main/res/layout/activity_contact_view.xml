@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -19,11 +20,20 @@
         <TextView
             android:id="@+id/contact_view_name"
             android:layout_width="wrap_content"
-            android:layout_margin="@dimen/vertical_small_margin"
-            android:textColor="@android:color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/vertical_small_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/white"/>
     </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/contact_view_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </RelativeLayout>

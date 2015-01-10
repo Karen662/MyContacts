@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,9 @@ public class ContactViewActivity extends ActionBarActivity {
 
         headerSection.setLayoutParams(new RelativeLayout.LayoutParams(width, (int)(width * (9.0 / 16.0))));
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
+        toolbar.inflateMenu(R.menu.menu_contact_view);
+        setSupportActionBar(toolbar);
     }
 
 
