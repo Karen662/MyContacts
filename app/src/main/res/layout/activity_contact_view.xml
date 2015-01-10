@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="silin.tutorial.mycontacts.ContactViewActivity">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@drawable/freedom_tower"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+    <TextView
+        android:id="@+id/contact_view_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
