@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,8 @@ public class ContactEditActivity extends ActionBarActivity {
 
                 mContact.phoneNumbers = getSectionValues(R.id.phonenumber_section);
                 mContact.emails = getSectionValues(R.id.email_section);
+
+                Toast.makeText(ContactEditActivity.this, getString(R.string.contact_edit_success_toast), Toast.LENGTH_LONG).show();
 
                 finish();
             }
