@@ -27,7 +27,7 @@ public class ContactViewActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.contact_view_name);
         textView.setText(contact.getName());
 
-        ImageView imageView = (ImageView) findViewById(R.id.contact_view_image);
+        RelativeLayout headerSection = (RelativeLayout) findViewById(R.id.contact_view_header);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point point = new Point();
@@ -36,7 +36,7 @@ public class ContactViewActivity extends ActionBarActivity {
         int width = point.x,
             height = point.y;
 
-        imageView.setLayoutParams(new RelativeLayout.LayoutParams(width, (int)(width * (9.0 / 16.0))));
+        headerSection.setLayoutParams(new RelativeLayout.LayoutParams(width, (int)(width * (9.0 / 16.0))));
 
     }
 
