@@ -4,8 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,34 @@ public class ContactEditActivity extends ActionBarActivity {
 
         addToSection(R.id.phonenumber_section, contact.phoneNumbers);
         addToSection(R.id.email_section, contact.emails);
+
+        TextView addNewPhoneNumberTextView = (TextView) findViewById(R.id.add_new_phonenumber),
+                addNewEmailTextView = (TextView) findViewById(R.id.add_new_email);
+
+        addNewPhoneNumberTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToSection(R.id.phonenumber_section, "");
+            }
+        });
+
+        addNewEmailTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToSection(R.id.email_section, "");
+            }
+        });
+    }
+
+    private void addToSection(int section, String value) {
+        LinearLayout phoneNumberSection = (LinearLayout) findViewById(section);
+        EditText editText = new EditText(ContactEditActivity.this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        editText.setLayoutParams(layoutParams);
+        editText.setText(value);
+        phoneNumberSection.addView(editText);
+
     }
 
     private void addToSection(int section, ArrayList<String> values) {
