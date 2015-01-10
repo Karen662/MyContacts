@@ -61,8 +61,6 @@ public class ContactViewActivity extends ActionBarActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.contact_view_edit) {
-                    Log.d(TAG, "Are you there?");
-
                     Intent i = new Intent(ContactViewActivity.this, ContactEditActivity.class);
                     i.putExtra(ContactEditActivity.EXTRA, mContact);
                     startActivity(i);
