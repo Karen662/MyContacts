@@ -5,6 +5,7 @@
                 tools:context="silin.tutorial.mycontacts.ContactViewActivity">
 
     <ImageView
+        android:id="@+id/contact_view_image"
         android:scaleType="fitXY"
         android:src="@drawable/freedom_tower"
         android:layout_width="match_parent"

@@ -1,9 +1,14 @@
 package silin.tutorial.mycontacts;
 
+import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -21,6 +26,18 @@ public class ContactViewActivity extends ActionBarActivity {
         Contact contact = (Contact) getIntent().getSerializableExtra(EXTRA);
         TextView textView = (TextView) findViewById(R.id.contact_view_name);
         textView.setText(contact.getName());
+
+        ImageView imageView = (ImageView) findViewById(R.id.contact_view_image);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+
+        int width = point.x,
+            height = point.y;
+
+        imageView.setLayoutParams(new RelativeLayout.LayoutParams(width, (int)(width * (9.0 / 16.0))));
+
     }
 
 
