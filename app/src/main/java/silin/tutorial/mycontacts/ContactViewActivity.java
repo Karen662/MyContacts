@@ -41,6 +41,20 @@ public class ContactViewActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
         toolbar.inflateMenu(R.menu.menu_contact_view);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.contact_view_edit)
+                {
+                    
+                    return true;
+                }
+
+                return false;
+            }
+        });
         setSupportActionBar(toolbar);
     }
 
