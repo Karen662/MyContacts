@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -92,11 +93,23 @@ public class ContactViewActivity extends ActionBarActivity {
             String value = (String) getItem(position);
             contactValue.setText(value);
 
+            ImageView iconImageView = (ImageView) convertView.findViewById(R.id.field_icon);
+
+            if (isFirst(position)) {
+                if (isEmail(position)) iconImageView.setImageResource(R.drawable.ic_email);
+
+                else iconImageView.setImageResource(R.drawable.ic_call);
+            }
+
             return convertView;
         }
 
         private boolean isEmail(int position) {
             return position > mPhoneNumbers.size() - 1;
+        }
+
+        private boolean isFirst(int position) {
+            return position == 0 || position == mPhoneNumbers.size();
         }
     }
 

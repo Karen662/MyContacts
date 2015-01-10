@@ -31,7 +31,9 @@ public class ContactListActivity extends ActionBarActivity {
             contact.setName("Silin Na");
             contact.emails = new ArrayList<>();
             contact.emails.add("silin.na@tivix.com");
+            contact.emails.add("silin.na@tivix.com");
             contact.phoneNumbers = new ArrayList<>();
+            contact.phoneNumbers.add("1-111-111-1111");
             contact.phoneNumbers.add("1-111-111-1111");
             mContacts.add(contact);
         }
