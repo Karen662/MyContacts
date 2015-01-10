@@ -19,12 +19,15 @@ public class ContactEditActivity extends ActionBarActivity {
 
     private Contact mContact;
 
+    private int mPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_edit);
 
-        mContact = (Contact) getIntent().getSerializableExtra(EXTRA);
+        mPosition = getIntent().getIntExtra(EXTRA, 0);
+        mContact = ContactList.getInstance().get(mPosition);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_edit_toolbar);
         toolbar.setTitle(getResources().getString(R.string.edit_contact));

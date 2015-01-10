@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +30,8 @@ public class ContactViewActivity extends ActionBarActivity {
 
     private int mColor;
 
+    private int mPosition;
+
     private Contact mContact;
 
     @Override
@@ -38,7 +39,8 @@ public class ContactViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_view);
 
-        mContact = (Contact) getIntent().getSerializableExtra(EXTRA);
+        mPosition = getIntent().getIntExtra(EXTRA, 0);
+        mContact = ContactList.getInstance().get(mPosition);
         TextView textView = (TextView) findViewById(R.id.contact_view_name);
         textView.setText(mContact.getName());
 
@@ -62,7 +64,7 @@ public class ContactViewActivity extends ActionBarActivity {
 
                 if (id == R.id.contact_view_edit) {
                     Intent i = new Intent(ContactViewActivity.this, ContactEditActivity.class);
-                    i.putExtra(ContactEditActivity.EXTRA, mContact);
+                    i.putExtra(ContactEditActivity.EXTRA, mPosition);
                     startActivity(i);
 
                     return true;
