@@ -1,18 +1,21 @@
 package silin.tutorial.mycontacts;
 
-import android.content.Intent;
 import android.graphics.Point;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 
 public class ContactViewActivity extends ActionBarActivity {
@@ -35,9 +38,9 @@ public class ContactViewActivity extends ActionBarActivity {
         display.getSize(point);
 
         int width = point.x,
-            height = point.y;
+                height = point.y;
 
-        headerSection.setLayoutParams(new RelativeLayout.LayoutParams(width, (int)(width * (9.0 / 16.0))));
+        headerSection.setLayoutParams(new LinearLayout.LayoutParams(width, (int) (width * (9.0 / 16.0))));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.contact_view_toolbar);
         toolbar.inflateMenu(R.menu.menu_contact_view);
@@ -46,16 +49,55 @@ public class ContactViewActivity extends ActionBarActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                if (id == R.id.contact_view_edit)
-                {
-                    
-                    return true;
-                }
+                return id == R.id.contact_view_edit;
 
-                return false;
             }
         });
         setSupportActionBar(toolbar);
+
+        ListView listView = (ListView) findViewById(R.id.contact_view_fields);
+        listView.setAdapter(new FieldsAdapter(contact.phoneNumbers, contact.emails));
+    }
+
+    private class FieldsAdapter extends BaseAdapter {
+        private ArrayList<String> mPhoneNumbers, mEmails;
+
+        private FieldsAdapter(ArrayList<String> phoneNumbers, ArrayList<String> emails) {
+            mPhoneNumbers = phoneNumbers;
+            mEmails = emails;
+        }
+
+        @Override
+        public int getCount() {
+            return mEmails.size() + mPhoneNumbers.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            if (isEmail(position)) return mEmails.get(position - mPhoneNumbers.size());
+            else return mPhoneNumbers.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                convertView = ContactViewActivity.this.getLayoutInflater().inflate(R.layout.contact_view_field_row, parent, false);
+
+            TextView contactValue = (TextView) convertView.findViewById(R.id.contact_view_row_value);
+            String value = (String) getItem(position);
+            contactValue.setText(value);
+
+            return convertView;
+        }
+
+        private boolean isEmail(int position) {
+            return position > mPhoneNumbers.size() - 1;
+        }
     }
 
 

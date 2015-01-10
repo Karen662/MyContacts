@@ -1,9 +1,8 @@
 package silin.tutorial.mycontacts;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,13 +25,14 @@ public class ContactListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_contact_list);
 
         mContacts = new ArrayList<>();
-        Contact contact1 = new Contact();
-        contact1.setName("Silin Na");
-        mContacts.add(contact1);
 
         for (int i = 0; i < 30; i++) {
             Contact contact = new Contact();
             contact.setName("Silin Na");
+            contact.emails = new ArrayList<>();
+            contact.emails.add("silin.na@tivix.com");
+            contact.phoneNumbers = new ArrayList<>();
+            contact.phoneNumbers.add("1-111-111-1111");
             mContacts.add(contact);
         }
 
