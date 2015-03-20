@@ -31,8 +31,6 @@ public class ContactViewFragment extends Fragment {
 
     private int mPosition;
 
-    public static final String EXTRA = "CVA_Contact";
-
     private Contact mContact;
 
     private TextView mContactName;
@@ -43,6 +41,9 @@ public class ContactViewFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void setPosition(int position) {
+        mPosition = position;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +51,6 @@ public class ContactViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact_view, container, false);
 
-        mPosition = getArguments().getInt(EXTRA, 0);
         mContact = ContactList.getInstance().get(mPosition);
         mContactName = (TextView) view.findViewById(R.id.contact_view_name);
 

@@ -32,6 +32,7 @@ public class ContactListActivity extends ActionBarActivity implements ContactLis
         if (mContactViewFragment == null && findViewById(R.id.view_fragment_container) != null)
         {
             mContactViewFragment = new ContactViewFragment();
+            mContactViewFragment.setPosition(0);
 
             getFragmentManager().beginTransaction()
                     .add(R.id.view_fragment_container, mContactViewFragment)
