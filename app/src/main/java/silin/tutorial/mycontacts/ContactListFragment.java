@@ -1,8 +1,8 @@
 package silin.tutorial.mycontacts;
 
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -29,6 +29,8 @@ public class ContactListFragment extends Fragment {
     private ContactList mContacts;
 
     private ContactAdapter mAdapter;
+
+    private Contract mContract;
 
 
     public ContactListFragment() {
@@ -88,10 +90,7 @@ public class ContactListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), ContactViewActivity.class);
-                i.putExtra(ContactViewActivity.EXTRA, position);
-
-                startActivity(i);
+                if (mContract != null) mContract.selectedPosition(position);
             }
         });
 
@@ -105,21 +104,25 @@ public class ContactListFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    private class ContactAdapter extends ArrayAdapter<Contact> {
-        private ContactAdapter(ArrayList<Contact> contacts) {
-            super(getActivity(), R.layout.contact_list_row, R.id.contact_row_name, contacts);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try
+        {
+            mContract = (Contract) activity;
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = super.getView(position, convertView, parent);
-
-            Contact contact = getItem(position);
-            TextView nameTextView = (TextView) convertView.findViewById(R.id.contact_row_name);
-            nameTextView.setText(contact.getName());
-
-            return convertView;
+        catch (ClassCastException e)
+        {
+            throw new IllegalStateException("Activity does not implement Contract interface.");
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContract = null;
     }
 
     @Override
@@ -142,5 +145,26 @@ public class ContactListFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ContactAdapter extends ArrayAdapter<Contact> {
+        private ContactAdapter(ArrayList<Contact> contacts) {
+            super(getActivity(), R.layout.contact_list_row, R.id.contact_row_name, contacts);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = super.getView(position, convertView, parent);
+
+            Contact contact = getItem(position);
+            TextView nameTextView = (TextView) convertView.findViewById(R.id.contact_row_name);
+            nameTextView.setText(contact.getName());
+
+            return convertView;
+        }
+    }
+
+    protected interface Contract {
+        public void selectedPosition(int position);
     }
 }

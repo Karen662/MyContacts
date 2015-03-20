@@ -1,10 +1,11 @@
 package silin.tutorial.mycontacts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 
-public class ContactListActivity extends ActionBarActivity {
+public class ContactListActivity extends ActionBarActivity implements ContactListFragment.Contract {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,5 +18,13 @@ public class ContactListActivity extends ActionBarActivity {
                     .add(R.id.list_fragment_container, new ContactListFragment())
                     .commit();
         }
+    }
+
+
+    @Override
+    public void selectedPosition(int position) {
+        Intent i = new Intent(this, ContactViewActivity.class);
+        i.putExtra(ContactViewActivity.EXTRA, position);
+        startActivity(i);
     }
 }
