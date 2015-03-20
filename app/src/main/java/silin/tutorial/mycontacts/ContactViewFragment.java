@@ -1,9 +1,7 @@
 package silin.tutorial.mycontacts;
 
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactViewFragment extends Fragment {
+public class ContactViewFragment extends BaseFragment<ContactViewFragment.Contract> {
 
     private int mColor;
 
@@ -37,8 +35,6 @@ public class ContactViewFragment extends Fragment {
     private TextView mContactName;
 
     private FieldsAdapter mAdapter;
-
-    private Contract mContract;
 
     public ContactViewFragment() {
         // Required empty public constructor
@@ -71,7 +67,7 @@ public class ContactViewFragment extends Fragment {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.contact_view_edit) {
-                    if (mContract != null) mContract.editedContact(mPosition);
+                    if (getContract() != null) getContract().editedContact(mPosition);
                     return true;
                 }
 
@@ -97,27 +93,6 @@ public class ContactViewFragment extends Fragment {
         super.onResume();
 
         updateUI();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try
-        {
-            mContract = (Contract) activity;
-        }
-
-        catch (ClassCastException e)
-        {
-            throw new IllegalStateException("Activity does not implement Contract interface.");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mContract = null;
     }
 
     private void updateUI() {

@@ -1,7 +1,6 @@
 package silin.tutorial.mycontacts;
 
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -24,14 +23,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactListFragment extends Fragment {
+public class ContactListFragment extends BaseFragment<ContactListFragment.Contract> {
 
     private ContactList mContacts;
 
     private ContactAdapter mAdapter;
-
-    private Contract mContract;
-
 
     public ContactListFragment() {
         // Required empty public constructor
@@ -90,7 +86,7 @@ public class ContactListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mContract != null) mContract.selectedPosition(position);
+                if (getContract() != null) getContract().selectedPosition(position);
             }
         });
 
@@ -102,27 +98,6 @@ public class ContactListFragment extends Fragment {
         super.onResume();
 
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try
-        {
-            mContract = (Contract) activity;
-        }
-
-        catch (ClassCastException e)
-        {
-            throw new IllegalStateException("Activity does not implement Contract interface.");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mContract = null;
     }
 
     @Override
