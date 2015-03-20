@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 
-public class ContactListActivity extends ActionBarActivity implements ContactListFragment.Contract {
+public class ContactListActivity extends ActionBarActivity implements ContactListFragment.Contract, ContactViewFragment.Contract {
 
     private ContactListFragment mContactListFragment;
 
@@ -54,5 +54,12 @@ public class ContactListActivity extends ActionBarActivity implements ContactLis
         {
             mContactViewFragment.setPosition(position);
         }
+    }
+
+    @Override
+    public void editedContact(int position) {
+        Intent i = new Intent(this, ContactEditActivity.class);
+        i.putExtra(ContactEditActivity.EXTRA, position);
+        startActivity(i);
     }
 }

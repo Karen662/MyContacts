@@ -1,6 +1,7 @@
 package silin.tutorial.mycontacts;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,6 +38,8 @@ public class ContactViewFragment extends Fragment {
 
     private FieldsAdapter mAdapter;
 
+    private Contract mContract;
+
     public ContactViewFragment() {
         // Required empty public constructor
     }
@@ -68,10 +71,7 @@ public class ContactViewFragment extends Fragment {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.contact_view_edit) {
-                    Intent i = new Intent(getActivity(), ContactEditActivity.class);
-                    i.putExtra(ContactEditActivity.EXTRA, mPosition);
-                    startActivity(i);
-
+                    if (mContract != null) mContract.editedContact(mPosition);
                     return true;
                 }
 
@@ -97,6 +97,27 @@ public class ContactViewFragment extends Fragment {
         super.onResume();
 
         updateUI();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try
+        {
+            mContract = (Contract) activity;
+        }
+
+        catch (ClassCastException e)
+        {
+            throw new IllegalStateException("Activity does not implement Contract interface.");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContract = null;
     }
 
     private void updateUI() {
@@ -182,5 +203,9 @@ public class ContactViewFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected interface Contract {
+        public void editedContact(int position);
     }
 }
