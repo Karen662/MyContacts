@@ -43,6 +43,12 @@ public class ContactViewFragment extends Fragment {
 
     public void setPosition(int position) {
         mPosition = position;
+
+        if (mAdapter != null) {
+            mContact = ContactList.getInstance().get(mPosition);
+            mAdapter.setContact(mContact);
+            updateUI();
+        }
     }
 
     @Override
@@ -74,7 +80,7 @@ public class ContactViewFragment extends Fragment {
         });
 
         ListView listView = (ListView) view.findViewById(R.id.contact_view_fields);
-        mAdapter = new FieldsAdapter(mContact.phoneNumbers, mContact.emails);
+        mAdapter = new FieldsAdapter(mContact);
         listView.setAdapter(mAdapter);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.freedom_tower);
@@ -101,9 +107,13 @@ public class ContactViewFragment extends Fragment {
     private class FieldsAdapter extends BaseAdapter {
         private ArrayList<String> mPhoneNumbers, mEmails;
 
-        private FieldsAdapter(ArrayList<String> phoneNumbers, ArrayList<String> emails) {
-            mPhoneNumbers = phoneNumbers;
-            mEmails = emails;
+        FieldsAdapter(Contact contact) {
+            this.setContact(contact);
+        }
+
+        public void setContact(Contact contact) {
+            mPhoneNumbers = contact.phoneNumbers;
+            mEmails = contact.emails;
         }
 
         @Override
